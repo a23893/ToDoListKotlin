@@ -51,3 +51,9 @@ A simple and intuitive task manager App built with Kotlin for Android. Allows yo
 
 - Este projeto é apenas para fins educativos/demonstração.
 - Pode ser expandido com notificações, sincronização com Firebase, temas, entre outros.
+
+---
+
+## 📱 APK | APK
+
+- O APK estará disponível no futuro, ainda em desenvolvimento.
