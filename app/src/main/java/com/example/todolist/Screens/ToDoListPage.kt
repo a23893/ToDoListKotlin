@@ -5,11 +5,11 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.todolist.Components.TaskBox
 import com.example.todolist.Mocks.Task
 import com.example.todolist.Mocks.getFakeTask
 import com.example.todolist.ui.theme.ToDoListTheme
@@ -26,7 +26,7 @@ fun ToDoListPage(modifier: Modifier = Modifier){
         LazyColumn (
             content = {
                 itemsIndexed(taskList){index:Int, item: Task ->
-                    Text(text = item.toString())
+                    TaskBox(item = item)
                 }
             }
         )
