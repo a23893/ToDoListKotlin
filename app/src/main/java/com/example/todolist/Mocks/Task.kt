@@ -74,6 +74,77 @@ fun getFakeTask(): List<Task> {
             true,
             now,
             now
+        ),
+        Task(
+            5,
+            "Task 4",
+            "Quarta Task com descrição mais longa",
+            now,
+            true,
+            true,
+            now,
+            now
+        ),
+        Task(
+            6,
+            "Task 4",
+            "Quarta Task com descrição mais longa",
+            now,
+            true,
+            true,
+            now,
+            now
+        ),
+        Task(
+            7,
+            "Task 4",
+            "Quarta Task com descrição mais longa",
+            now,
+            true,
+            true,
+            now,
+            now
+        ),
+        Task(
+            8,
+            "Task 4",
+            "Quarta Task com descrição mais longa",
+            now,
+            true,
+            true,
+            now,
+            now
+        ),
+        Task(
+            9,
+            "Task 4",
+            "Quarta Task com descrição mais longa",
+            now,
+            true,
+            true,
+            now,
+            now
+        ),
+        Task(
+            10,
+            "Task 4",
+            "Quarta Task com descrição mais longa",
+            now,
+            true,
+            true,
+            now,
+            now
+        ),
+        Task(
+            11,
+            "Task 4",
+            "Quarta Task com descrição mais longa",
+            now,
+            true,
+            true,
+            now,
+            now
         )
+
     )
 }

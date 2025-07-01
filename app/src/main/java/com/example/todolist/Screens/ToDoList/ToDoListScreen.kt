@@ -1,4 +1,4 @@
-package com.example.todolist.Screens
+package com.example.todolist.Screens.ToDoList
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,6 +10,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,27 +26,35 @@ import com.example.todolist.Mocks.getFakeTask
 import com.example.todolist.ui.theme.ToDoListTheme
 
 @Composable
-fun ToDoListPage(modifier: Modifier = Modifier){
+fun ToDoListPage(modifier: Modifier = Modifier) {
 
-    val taskList = getFakeTask()
+    // Estado do texto search
+    var searchQuery by remember { mutableStateOf("") }
 
-    Column (
-        modifier =Modifier.fillMaxHeight()
+    // Lista completa
+    val allTasks = remember { getFakeTask() }
+
+    // Lista filtrada
+    val filteredTasks = allTasks.filter { task ->
+        task.name.contains(searchQuery, ignoreCase = true)
+    }
+
+    Column(
+        modifier = modifier
+            .fillMaxHeight()
             .padding(8.dp)
-    ){
+    ) {
         TaskSearch(onSearchChanged = { query ->
-            // Atualizar lista de tarefas filtradas com base na pesquisa
+            searchQuery = query
         })
 
         Spacer(modifier = Modifier.size(10.dp))
 
-        LazyColumn (
-            content = {
-                itemsIndexed(taskList){index:Int, item: Task ->
-                    TaskBox(item = item)
-                }
+        LazyColumn {
+            itemsIndexed(filteredTasks) { index: Int, item: Task ->
+                TaskBox(item = item)
             }
-        )
+        }
 
         Box(
             modifier = Modifier
@@ -52,7 +64,6 @@ fun ToDoListPage(modifier: Modifier = Modifier){
         ) {
             FloatingAddButton(onClick = { /* ação de adicionar task */ })
         }
-
     }
 }
 

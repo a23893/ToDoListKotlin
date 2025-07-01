@@ -23,8 +23,8 @@ fun FloatingAddButton(onClick: () -> Unit = {}) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun FloatingAddButtonPreview() {
-    FloatingAddButton()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun FloatingAddButtonPreview() {
+//    FloatingAddButton()
+//}

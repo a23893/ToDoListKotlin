@@ -33,7 +33,7 @@ fun TaskSearch(
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
             .padding(8.dp),
-        placeholder = { Text("Procurar tarefa...") },
+        placeholder = { Text("Search Task...") },
         leadingIcon = {
             Icon(imageVector = Icons.Default.Search, contentDescription = "Ícone de busca")
         },
