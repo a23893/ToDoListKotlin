@@ -24,7 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.todolist.Mocks.Task
+import com.example.todolist.Model.Task
 import com.example.todolist.R
 import java.text.SimpleDateFormat
 import java.time.Instant
@@ -32,26 +32,28 @@ import java.util.Date
 import java.util.Locale
 
 @Composable
-fun TaskBox(item: Task){
-
+fun TaskBox(
+    item: Task,
+    onDelete: (Int) -> Unit // novo parâmetro
+) {
     var isChecked by remember { mutableStateOf(item.checked) }
 
-    Row (
-        modifier = Modifier.fillMaxWidth()
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(8.dp)
             .clip(RoundedCornerShape(16.dp))
             .background(MaterialTheme.colorScheme.primary)
             .padding(16.dp)
-    ){
+    ) {
         Checkbox(
             checked = isChecked,
             onCheckedChange = {
                 isChecked = it
-                // chamar uma função para atualizar a task, se usar ViewModel
+                // Aqui você também pode acionar uma função para atualizar o status no ViewModel
             },
             colors = CheckboxDefaults.colors(
-                //checkedColor = MaterialTheme.colorScheme.secondary,
-                checkedColor = Color(0xFF4CAF50), // Verde
+                checkedColor = Color(0xFF4CAF50),
                 checkmarkColor = Color.White,
                 uncheckedColor = Color.Gray
             )
@@ -60,9 +62,8 @@ fun TaskBox(item: Task){
         Column(
             modifier = Modifier.weight(1f)
         ) {
-
             Text(
-                text = SimpleDateFormat("HH:mm:aa, dd/mm", Locale.ENGLISH).format(item.createdAt),
+                text = SimpleDateFormat("HH:mm, dd/MM", Locale.ENGLISH).format(item.createdAt),
                 fontSize = 10.sp,
                 color = Color.LightGray
             )
@@ -72,7 +73,10 @@ fun TaskBox(item: Task){
                 color = Color.White
             )
         }
-        IconButton(onClick = {}) {
+
+        IconButton(onClick = {
+            onDelete(item.id) // <- chama a função passada
+        }) {
             Icon(
                 painter = painterResource(id = R.drawable.baseline_delete_24),
                 contentDescription = "Delete icon",
@@ -82,9 +86,10 @@ fun TaskBox(item: Task){
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun TaskBoxPreview() {
-    TaskBox(Task(1, "Task 1", "Primeira Task", Date.from(Instant.now()), false, true, Date.from(
-        Instant.now())),)
-}
+
+//@Preview(showBackground = true)
+//@Composable
+//fun TaskBoxPreview() {
+//    TaskBox(Task(1, "Task 1", "Primeira Task", Date.from(Instant.now()), false, true, Date.from(
+//        Instant.now())),)
+//}

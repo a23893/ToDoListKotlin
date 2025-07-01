@@ -7,17 +7,15 @@ object TaskManager {
 
     private val taskList = mutableListOf<Task>()
 
-    fun getAllTasks() : List<Task>{
-        return taskList
+    fun getAllTasks(): List<Task> {
+        return taskList.toList() // força recomposição
     }
 
-    fun addTask(task: Task){
+    fun addTask(task: Task) {
         taskList.add(task)
     }
 
-    fun deleteTask(id : Int){
-        taskList.removeIf{
-            it.id==id
-        }
+    fun deleteTask(id: Int) {
+        taskList.removeIf { it.id == id }
     }
 }
