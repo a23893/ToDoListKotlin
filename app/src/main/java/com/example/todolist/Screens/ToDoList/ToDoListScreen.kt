@@ -31,31 +31,41 @@ fun ToDoListPage(modifier: Modifier = Modifier) {
     // Estado do texto search
     var searchQuery by remember { mutableStateOf("") }
 
-    // Lista completa
+    // Lista completa (mocks)
     val allTasks = remember { getFakeTask() }
 
     // Lista filtrada
-    val filteredTasks = allTasks.filter { task ->
-        task.name.contains(searchQuery, ignoreCase = true)
+    val filteredTasks = allTasks.filter {
+        it.name.contains(searchQuery, ignoreCase = true)
     }
 
-    Column(
+    Box(
         modifier = modifier
-            .fillMaxHeight()
-            .padding(8.dp)
+            .fillMaxSize()
     ) {
-        TaskSearch(onSearchChanged = { query ->
-            searchQuery = query
-        })
 
-        Spacer(modifier = Modifier.size(10.dp))
+        // Conteúdo principal
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp)
+        ) {
+            TaskSearch(onSearchChanged = { query ->
+                searchQuery = query
+            })
 
-        LazyColumn {
-            itemsIndexed(filteredTasks) { index: Int, item: Task ->
-                TaskBox(item = item)
+            Spacer(modifier = Modifier.size(10.dp))
+
+            LazyColumn(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                itemsIndexed(filteredTasks) { index, item ->
+                    TaskBox(item = item)
+                }
             }
         }
 
+        // Add Button
         Box(
             modifier = Modifier
                 .fillMaxSize()
