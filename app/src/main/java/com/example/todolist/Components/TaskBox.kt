@@ -1,6 +1,7 @@
 package com.example.todolist.Components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,7 +35,9 @@ import java.util.Locale
 @Composable
 fun TaskBox(
     item: Task,
-    onDelete: (Int) -> Unit // novo parâmetro
+    onClick: () -> Unit,
+    onDelete: (Int) -> Unit,
+    onCheckedChange: (Boolean) -> Unit
 ) {
     var isChecked by remember { mutableStateOf(item.checked) }
 
@@ -44,23 +47,27 @@ fun TaskBox(
             .padding(8.dp)
             .clip(RoundedCornerShape(16.dp))
             .background(MaterialTheme.colorScheme.primary)
+            .clickable { onClick() }
             .padding(16.dp)
     ) {
         Checkbox(
             checked = isChecked,
             onCheckedChange = {
                 isChecked = it
-                // Aqui você também pode acionar uma função para atualizar o status no ViewModel
+                onCheckedChange(it)  // <-- dispara update para o ViewModel
             },
             colors = CheckboxDefaults.colors(
                 checkedColor = Color(0xFF4CAF50),
                 checkmarkColor = Color.White,
                 uncheckedColor = Color.Gray
-            )
+            ),
+            modifier = Modifier.padding(end = 8.dp)
         )
 
         Column(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = 8.dp)
         ) {
             Text(
                 text = SimpleDateFormat("HH:mm, dd/MM", Locale.ENGLISH).format(item.createdAt),
@@ -74,9 +81,9 @@ fun TaskBox(
             )
         }
 
-        IconButton(onClick = {
-            onDelete(item.id) // <- chama a função passada
-        }) {
+        IconButton(
+            onClick = { onDelete(item.id) }
+        ) {
             Icon(
                 painter = painterResource(id = R.drawable.baseline_delete_24),
                 contentDescription = "Delete icon",
@@ -85,6 +92,8 @@ fun TaskBox(
         }
     }
 }
+
+
 
 
 //@Preview(showBackground = true)

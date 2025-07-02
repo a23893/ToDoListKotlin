@@ -16,10 +16,20 @@ class ToDoListScreenViewModel : ViewModel() {
         _todoList.value = TaskManager.getAllTasks()
     }
 
+    fun getTaskById(id: Int): Task? {
+        return TaskManager.getAllTasks().find { it.id == id }
+    }
+
     fun addTask(task: Task) {
         TaskManager.addTask(task)
         getAllTasks()  // atualiza a LiveData
     }
+
+    fun updateTask(updatedTask: Task) {
+        TaskManager.updateTask(updatedTask)
+        getAllTasks()
+    }
+
 
     fun deleteTask(id : Int){
         TaskManager.deleteTask(id)

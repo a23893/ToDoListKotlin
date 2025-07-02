@@ -28,24 +28,29 @@ import com.example.todolist.DataManager.TaskManager
 import com.example.todolist.Mocks.getFakeTask
 import com.example.todolist.ui.theme.ToDoListTheme
 
+// * IMPLEMENTAÇAO USANDO MOCKS *
+// Estado do texto search
+//var searchQuery by remember { mutableStateOf("") }
+
+// Lista completa (mocks)
+//val allTasks = remember { getFakeTask() }
+
+// Lista filtrada
+//val filteredTasks = allTasks.filter {
+//    it.name.contains(searchQuery, ignoreCase = true)
+//}
+
+// Estado do modal
+//var showAddModal by remember { mutableStateOf(false) }
+// * FIM *
+
+
 @Composable
-fun ToDoListPage(modifier: Modifier = Modifier, viewModel: ToDoListScreenViewModel) {
-
-    // * IMPLEMENTAÇAO USANDO MOCKS *
-    // Estado do texto search
-    //var searchQuery by remember { mutableStateOf("") }
-
-    // Lista completa (mocks)
-    //val allTasks = remember { getFakeTask() }
-
-    // Lista filtrada
-    //val filteredTasks = allTasks.filter {
-    //    it.name.contains(searchQuery, ignoreCase = true)
-    //}
-
-    // Estado do modal
-    //var showAddModal by remember { mutableStateOf(false) }
-    // * FIM *
+fun ToDoListPage(
+    modifier: Modifier = Modifier,
+    viewModel: ToDoListScreenViewModel,
+    onTaskClick: (Int) -> Unit
+) {
 
     var searchQuery by remember { mutableStateOf("") }
     val allTasks by viewModel.todoList.observeAsState(initial = emptyList())
@@ -75,16 +80,25 @@ fun ToDoListPage(modifier: Modifier = Modifier, viewModel: ToDoListScreenViewMod
             Spacer(modifier = Modifier.size(10.dp))
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                itemsIndexed(filteredTasks) { index, item ->
+                itemsIndexed(filteredTasks) { _, item ->
                     TaskBox(
                         item = item,
+                        onClick = {
+                            onTaskClick(item.id) // <<< aqui navega pra detalhes
+                        },
                         onDelete = { id ->
                             viewModel.deleteTask(id)
-                            viewModel.getAllTasks() // força atualizar
+                            viewModel.getAllTasks()
+                        },
+                        onCheckedChange = { isChecked ->
+                            val updatedTask = item.copy(checked = isChecked)
+                            viewModel.updateTask(updatedTask)
                         }
                     )
                 }
             }
+
+
         }
 
         // Botão de adicionar

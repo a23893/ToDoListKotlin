@@ -15,6 +15,13 @@ object TaskManager {
         taskList.add(task)
     }
 
+    fun updateTask(updatedTask: Task) {
+        val index = taskList.indexOfFirst { it.id == updatedTask.id }
+        if (index != -1) {
+            taskList[index] = updatedTask
+        }
+    }
+
     fun deleteTask(id: Int) {
         taskList.removeIf { it.id == id }
     }
