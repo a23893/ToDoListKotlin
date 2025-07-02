@@ -55,14 +55,14 @@ fun ToDoListPage(
     var searchQuery by remember { mutableStateOf("") }
     val allTasks by viewModel.todoList.observeAsState(initial = emptyList())
 
-    // Filtra a lista com base no texto digitado
+    // Filtra a lista com base no texto
     val filteredTasks = allTasks.filter {
         it.name.contains(searchQuery, ignoreCase = true)
     }
 
     var showAddModal by remember { mutableStateOf(false) }
 
-    // Carrega as tarefas quando o Composable for exibido
+    // Carrega as tarefas quando o Composable é exibido
     LaunchedEffect(Unit) {
         viewModel.getAllTasks()
     }
@@ -84,7 +84,7 @@ fun ToDoListPage(
                     TaskBox(
                         item = item,
                         onClick = {
-                            onTaskClick(item.id) // <<< aqui navega pra detalhes
+                            onTaskClick(item.id) // navega pra detalhes
                         },
                         onDelete = { id ->
                             viewModel.deleteTask(id)

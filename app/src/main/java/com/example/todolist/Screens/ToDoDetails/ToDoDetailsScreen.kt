@@ -49,10 +49,10 @@ fun TaskDetailPage(
                 .padding(vertical = 12.dp, horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Botão de voltar simples
+            // Botão de voltar
             IconButton(onClick = onBack) {
                 Icon(
-                    imageVector = Icons.Filled.ArrowBack, // Este é estável, faz parte do compose.material
+                    imageVector = Icons.Filled.ArrowBack,
                     contentDescription = "Voltar",
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
@@ -133,7 +133,7 @@ fun TaskDetailPage(
                             contentAlignment = Alignment.Center
                         ) {
                             if (step.isDone) {
-                                // Desenha um ✓ manualmente (usando um Text simples)
+                                // Desenha um ✓ manualmente
                                 Text(
                                     text = "✓",
                                     color = Color(0xFF4CAF50),

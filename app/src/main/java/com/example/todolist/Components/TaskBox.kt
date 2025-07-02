@@ -14,22 +14,15 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.todolist.Model.Task
 import com.example.todolist.R
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.util.Date
 import java.util.Locale
 
 @Composable
@@ -39,8 +32,6 @@ fun TaskBox(
     onDelete: (Int) -> Unit,
     onCheckedChange: (Boolean) -> Unit
 ) {
-    var isChecked by remember { mutableStateOf(item.checked) }
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -51,10 +42,9 @@ fun TaskBox(
             .padding(16.dp)
     ) {
         Checkbox(
-            checked = isChecked,
-            onCheckedChange = {
-                isChecked = it
-                onCheckedChange(it)  // <-- dispara update para o ViewModel
+            checked = item.checked,  // usa o valor direto do item
+            onCheckedChange = { checked ->
+                onCheckedChange(checked)  // chama a callback para atualizar ViewModel
             },
             colors = CheckboxDefaults.colors(
                 checkedColor = Color(0xFF4CAF50),
@@ -92,9 +82,6 @@ fun TaskBox(
         }
     }
 }
-
-
-
 
 //@Preview(showBackground = true)
 //@Composable
